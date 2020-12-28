@@ -1,0 +1,109 @@
+Metadata-Version: 2.1
+Name: OneKey
+Version: 4.1.1
+Summary: A Cold Hardware Wallet
+Home-page: UNKNOWN
+Author: Onekey
+Author-email: UNKNOWN
+License: MIT license
+Platform: UNKNOWN
+Classifier: Development Status :: 1 - Planning
+Classifier: License :: OSI Approved :: MIT license
+Classifier: Programming Language :: Python :: 3.8
+Requires-Dist: aiohttp-socks (==0.3.9)
+Requires-Dist: aiohttp (==3.6.2)
+Requires-Dist: aiorpcX (==0.18.4)
+Requires-Dist: async-timeout (==3.0.1)
+Requires-Dist: attrs (==19.3.0)
+Requires-Dist: bitstring (==3.1.7)
+Requires-Dist: certifi
+Requires-Dist: chardet (==3.0.4)
+Requires-Dist: dnspython (==2.0.0)
+Requires-Dist: ecdsa (==0.15)
+Requires-Dist: helpdev (==0.7.1)
+Requires-Dist: requests (==2.21.0)
+Requires-Dist: urllib3 (==1.24.3)
+Requires-Dist: websockets
+Requires-Dist: mnemonic (==0.19)
+Requires-Dist: click (==7.0)
+Requires-Dist: construct (==2.9.45)
+Requires-Dist: libusb1 (==1.7.1)
+Requires-Dist: libusb (==1.0.22b2)
+Requires-Dist: importlib-metadata (==1.6.1)
+Requires-Dist: multidict (==4.7.4)
+Requires-Dist: protobuf (==3.12.2)
+Requires-Dist: pyaes (==1.6.1)
+Requires-Dist: QDarkStyle (==2.8.1)
+Requires-Dist: qrcode (==6.1)
+Requires-Dist: QtPy (==1.9.0)
+Requires-Dist: six (==1.15.0)
+Requires-Dist: typing-extensions (==3.7.4.2)
+Requires-Dist: yarl (==1.4.2)
+Requires-Dist: zipp (==3.1.0)
+Requires-Dist: colorama (==0.4.3)
+Requires-Dist: cffi (==1.13.2)
+Requires-Dist: coincurve (==13.0.0)
+Requires-Dist: pycparser (==2.20)
+Requires-Dist: asn1crypto (==0.24.0)
+Requires-Dist: web3 (==5.13.0)
+Requires-Dist: eth-account (==0.5.4)
+Requires-Dist: eth-keys (==0.3.3)
+Requires-Dist: eth-utils (==1.9.5)
+Requires-Dist: lru-dict (==1.1.6)
+Requires-Dist: eth-abi (==2.1.1)
+Requires-Dist: hexbytes (==0.2.1)
+Requires-Dist: cytoolz (==0.11.0)
+Requires-Dist: eth-hash (==0.2.0)
+Requires-Dist: eth-rlp (==0.2.1)
+Requires-Dist: attrdict (==2.0.1)
+Requires-Dist: eth-typing (==2.2.2)
+Requires-Dist: parsimonious (==0.8.1)
+Requires-Dist: rlp (==2.0.0)
+Requires-Dist: rubicon-objc (==0.4.0)
+
+OneKey, iOS Native UI
+============================
+
+This subdirectory implements an iOS native UI for OneKey.
+It uses the 'Briefcase' project to create an Xcode project which contains within it a Python interpreter, plus all scripts and dependent python packages.  Python 3.6 or above is recommended.
+
+- Rubicon-iOS Web Page: https://pybee.org/project/projects/bridges/rubicon/
+- Briefcase Web Page: https://pybee.org/project/projects/tools/briefcase/
+
+Quick Start Instructions
+------------------------
+1. Requirements:
+
+   * MacOS 12.1  is required with Xcode installed
+   * Python 3.8 must be installed
+   * cookiecutter, briefcase, pbxproj, and setuptools python packages must be installed::
+
+           python3.8 -m pip install 'setuptools==40.6.2' --user
+           python3.8 -m pip install 'cookiecutter==1.6.0' --user
+           python3.8 -m pip install 'briefcase==0.2.6' --user
+           python3.8 -m pip install 'pbxproj==2.5.1' --user
+2. ReSign the binary dependencies
+        sh coderesign.sh
+
+3. Generate the iOS project using the included shell script::
+
+           ./make_ios_project.sh
+
+App Store and Ad-Hoc Distribution
+---------------------------------
+For reasons that aren't entirely clear to me (but likely due to the way libPython.a and other libs are built), you need to do some special magic for the "Release" build to actually run properly. This means that if you want to compile for the App Store or for Ad-Hoc distribution, you need to disable symbol stripping of the compiled binary.  Make sure the following build settings for the "Release" build are as follows:
+
+ - **Strip Debug Symbols During Copy** = NO
+ - **Strip Linked Product** = NO
+ - **Strip Style** = Debugging Symbols
+ - **Enable Bitcode** = NO
+ - **Valid Architectures** = arm64
+ - **Symbols Hidden by Default** = NO
+
+For more information, see this stackoverflow post: https://stackoverflow.com/questions/22261753/ios-app-wont-start-on-testflight-ad-hoc-distribution
+
+Additional Notes
+----------------
+The app built by this Xcode project is a fully running standalone OneKey as an iPhone app.!
+
+
